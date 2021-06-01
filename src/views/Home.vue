@@ -1,16 +1,20 @@
 <template>
 <div>
-  <main v-if="!cargaDatos">
-  <Main :titulo="titulo" :fecha='Fecha' :Estado="Estado"></Main>
-
+  <main >
+  <Main v-if='!spinner'></Main>
+  <div v-for="(item, index) of traerDatos" :key="index">
+      <p>{{item}}</p>
+  </div>
   </main>
-  <main v-if="cargaDatos">
+  <main v-if="spinner">
     <div class="spinner">
         <div class="double-bounce1 bg-primary"></div>
         <div class="double-bounce2 bg-primary"></div>
         <div class="double-bounce3 bg-primary"></div>
     </div>
   </main>
+
+ 
 </div>
 
 </template>
@@ -18,38 +22,22 @@
 <script>
 
 import Main from '@/components/Main.vue';
-
+import {mapActions,mapMutations,mapState} from 'vuex'
 export default {
   name: 'Home',
   components: {
    Main
   },
-  data(){
-    return {
-      cargaDatos:true,
-      titulo: 'Global',
-      Fecha: '',
-      Estado: {},
-      Ciudades: []
-      //Crear icono de carga
-
-    }
-  },
   methods:{
-    async traerDatosApi(){
-     const data = await fetch('https://api.covid19api.com/summary')
-     return await data.json();
-    }
+    ...mapActions(['obtenerDatos']),
+    ...mapMutations(['traerDatos']),
   },
-   async created(){
-     const datos = await this.traerDatosApi();
-     console.log(datos)
-     this.Fecha = datos.Date;
-     this.Estado = datos.Global;
-     this.Ciudades = datos.Countries;
-     this.cargaDatos = false;
+  computed:{
+    ...mapState(['dataApi','spinner']),
+    Paises(){
+      return this.dataApi
     }
-    
+  }
 }
 </script>
 
