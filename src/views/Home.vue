@@ -6,12 +6,16 @@
       <p>{{item}}</p>
   </div>
   </main>
-  <main v-if="spinner">
-    <div class="spinner">
+  <main  v-if="spinner">
+    <div class="spinner-6"></div>
+
+    <!--div class="spinner">
         <div class="double-bounce1 bg-primary"></div>
         <div class="double-bounce2 bg-primary"></div>
         <div class="double-bounce3 bg-primary"></div>
-    </div>
+    </div-->
+    <!--div class="spinner-1"></div-->
+
   </main>
 
  
@@ -42,7 +46,7 @@ export default {
 </script>
 
 <style scoped>
-.spinner {
+/*.spinner {
   width: 80px;
   height: 80px;
   position: absolute;
@@ -90,4 +94,54 @@ export default {
   }
 }
 
+.spinner-1 {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#1b5eda 0 90deg,#fcfcfc 0 180deg);
+  animation: s1 0.5s infinite;
+  margin:auto;
+  position:absolute;
+  top:45%;
+  left:45%;
+}
+
+@keyframes s1 {
+  100% {transform: rotate(.5turn)}
+}*/
+.spinner-6 {
+  width: 120px;
+  height: 120px;
+  display: grid;
+  border:6px solid #0000;
+  border-radius: 50%;
+  border-color:#cccccc #0000;
+  animation: s6 1s infinite linear;
+  margin:auto;
+  position:absolute;
+  left:45%;
+  top:45%;
+  
+}
+.spinner-6::before,
+.spinner-6::after {    
+  content:"";
+  grid-area: 1/1;
+  margin:2px;
+  border:inherit;
+  border-radius: 50%;
+}
+.spinner-6::before {
+  border-color:#244ccf #0000;
+  animation:inherit; 
+  animation-duration: .5s;
+  animation-direction: reverse;
+}
+.spinner-6::after {
+  margin:8px;
+}
+
+@keyframes s6 { 
+  100%{transform: rotate(1turn)}
+}
 </style>
